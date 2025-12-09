@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💡 Styora - Free Study Companion</title>
+    
+    <!-- Make it feel like an app -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-web-app-capable" content="yes">
+    <meta name="theme-color" content="#98FF98">
+    
+    <!-- iOS/Android icons -->
+    <link rel="apple-touch-icon" href="https://img.icons8.com/color/96/000000/light-on.png">
+    <link rel="icon" href="https://img.icons8.com/color/96/000000/light-on.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --mint: #98FF98;
+            --lilac: #C8A2C8;
+            --dark-lilac: #b391b3;
+            --white: #ffffff;
+            --gray: #f8f9fa;
+            --dark: #333333;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f9ff 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Cute floating elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(152, 255, 152, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(200, 162, 200, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--mint), var(--lilac));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            display: inline-block;
+            font-weight: 700;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #666;
+            font-family: 'Quicksand', sans-serif;
+            margin-bottom: 30px;
+        }
+        
+        /* Yuki Character Card */
+        .yuki-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 2px solid var(--lilac);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .yuki-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--mint), var(--lilac));
+        }
+        
+        .yuki-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #e0f7fa, #f3e5f5);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            position: relative;
+            border: 3px solid var(--lilac);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+        }
+        
+        .yuki-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .yuki-title {
+            color: var(--lilac);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        
+        .yuki-quote {
+            font-family: 'Quicksand', sans-serif;
+            font-style: italic;
+            color: #666;
+            margin-top: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border-left: 3px solid var(--mint);
+        }
+        
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(152, 255, 152, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: var(--mint);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        .feature-desc {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        /* Pomodoro Timer */
+        .pomodoro-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+            border: 2px solid rgba(152, 255, 152, 0.3);
+        }
+        
+        .timer-display {
+            font-size: 4.5rem;
+            font-family: 'Quicksand', monospace;
+            font-weight: 600;
+            color: var(--lilac);
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .timer-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--mint), var(--lilac));
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--gray);
+            color: var(--dark);
+            border: 1px solid #ddd;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Chat with Yuki */
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .chat-header-icon {
+            font-size: 1.8rem;
+        }
+        
+        .chat-box {
+            height: 200px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            position: relative;
+        }
+        
+        .message-yuki {
+            background: linear-gradient(135deg, #f0f9ff, #e6f7ff);
+            border-bottom-left-radius: 5px;
+            align-self: flex-start;
+            border: 1px solid rgba(152, 255, 152, 0.3);
+        }
+        
+        .message-user {
+            background: linear-gradient(135deg, #f8f0ff, #f3e5f5);
+            border-bottom-right-radius: 5px;
+            margin-left: auto;
+            border: 1px solid rgba(200, 162, 200, 0.3);
+        }
+        
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+        
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--mint);
+        }
+        
+        /* Streak Counter */
+        .streak-container {
+            background: linear-gradient(135deg, var(--mint), var(--lilac));
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 400px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .streak-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+        }
+        
+        .streak-number {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        /* Waitlist Form */
+        .waitlist-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px auto;
+            max-width: 500px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 2px solid var(--lilac);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--mint);
+            box-shadow: 0 0 0 3px rgba(152, 255, 152, 0.1);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+        }
+        
+        .heart {
+            color: #ff6b8b;
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo { font-size: 2.5rem; }
+            .timer-display { font-size: 3.5rem; }
+            .timer-controls { flex-direction: column; }
+            .btn { width: 100%; }
+            .features-grid { grid-template-columns: 1fr; }
+            .chat-input-container { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">💡 Styora</div>
+            <p class="tagline">Free AI study companion for students. Cute aesthetic, zero cost.</p>
+        </div>
+        
+        <!-- Yuki Character -->
+        <div class="yuki-card">
+            <div class="yuki-avatar">🦊✨</div>
+            <div class="yuki-name">Yuki</div>
+            <div class="yuki-title">Nine-Tailed Study Fox</div>
+            <p>"I may look cute, but I'm dangerously effective at making you study. Let's begin."</p>
+            <div class="yuki-quote">Wearing silver glasses that hide calculating eyes. Approach with caution.</div>
+        </div>
+        
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3 class="feature-title">Smart AI Tutor</h3>
+                <p class="feature-desc">Yuki explains complex topics simply. Ask anything from math to literature.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3 class="feature-title">PDF & Link Upload</h3>
+                <p class="feature-desc">Upload study materials. Yuki will quiz you and create summaries.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">Customizable</h3>
+                <p class="feature-desc">Personalize your study space, Yuki's appearance, and theme colors.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3 class="feature-title">App + Web</h3>
+                <p class="feature-desc">Works on all devices. Add to home screen for app-like experience.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3 class="feature-title">Reminders & Planner</h3>
+                <p class="feature-desc">Never miss deadlines. Yuki will (gently) remind you to study.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3 class="feature-title">Free Forever</h3>
+                <p class="feature-desc">Built for broke students. No payments, ever. Seriously.</p>
+            </div>
+        </div>
+        
+        <!-- Pomodoro Timer -->
+        <div class="pomodoro-container">
+            <h2>🍅 Pomodoro Timer</h2>
+            <p>Study for 25 minutes, break for 5. Yuki's watching.</p>
+            <div class="timer-display" id="timer">25:00</div>
+            <div class="timer-controls">
+                <button class="btn btn-primary" onclick="startTimer()">
+                    ▶ Start Focus
+                </button>
+                <button class="btn btn-secondary" onclick="pauseTimer()">
+                    ⏸ Pause
+                </button>
+                <button class="btn btn-secondary" onclick="resetTimer()">
+                    🔄 Reset
+                </button>
+            </div>
+            <div style="margin-top: 20px; font-size: 0.9rem; color: #666;">
+                <span id="session-counter">Session: 0</span>
+            </div>
+        </div>
+        
+        <!-- Chat with Yuki -->
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-header-icon">🦊</div>
+                <div>
+                    <h3>Chat with Yuki</h3>
+                    <p style="color: #666; font-size: 0.9rem;">Ask for study help, explanations, or motivation</p>
+                </div>
+            </div>
+            
+            <div class="chat-box" id="chat-box">
+                <div class="message message-yuki">
+                    <strong>Yuki:</strong> Hello. I see you're procrastinating. Shall we begin studying?
+                </div>
+                <div class="message message-user">
+                    <strong>You:</strong> Can you explain photosynthesis simply?
+                </div>
+                <div class="message message-yuki">
+                    <strong>Yuki:</strong> Plants eat sunlight. They turn CO2 + water into sugar + oxygen. That's it. Now study.
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chat-input" placeholder="Ask Yuki anything... (Try: 'Explain quantum physics' or 'Help me study')">
+                <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        
+        <!-- Streak Counter -->
+        <div class="streak-container">
+            <h2>🔥 Study Streak</h2>
+            <p>Don't break the chain. Yuki gets... disappointed.</p>
+            <div class="streak-number" id="streak-count">0</div>
+            <button class="btn" onclick="addStreak()" style="background: white; color: var(--lilac); font-weight: 600;">
+                ✅ I Studied Today!
+            </button>
+            <p style="margin-top: 15px; opacity: 0.9;">Days in a row of consistent studying</p>
+        </div>
+        
+        <!-- Waitlist Form -->
+        <div class="waitlist-container">
+            <h2 style="text-align: center; margin-bottom: 25px; color: var(--lilac);">🚀 Join Waitlist</h2>
+            <p style="text-align: center; margin-bottom: 25px; color: #666;">Get early access when the full app launches!</p>
+            
+            <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input type="text" class="form-input" id="name" placeholder="Alex Chen">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" id="email" placeholder="student@university.edu">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">What are you studying?</label>
+                <select class="form-select" id="study-field">
+                    <option>Select your field</option>
+                    <option>Computer Science</option>
+                    <option>Medicine/Pre-Med</option>
+                    <option>Engineering</option>
+                    <option>Business/Finance</option>
+                    <option>Arts & Humanities</option>
+                    <option>Science & Research</option>
+                    <option>Law</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-primary" onclick="joinWaitlist()" style="width: 100%; padding: 17px; font-size: 1.1rem;">
+                Join Free Waitlist 🦊
+            </button>
+            
+            <p id="waitlist-message" style="text-align: center; margin-top: 15px; color: green; display: none;">
+                ✅ Added to waitlist! Check your email soon!
+            </p>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Made with <span class="heart">♥</span> for broke students everywhere</p>
+            <p>💡 Styora • Zero Cost • Aesthetic Study Tools</p>
+            <p style="margin-top: 15px; font-size: 0.8rem; color: #888;">
+                P.S. Yuki is watching your study habits. Make him proud.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Pomodoro Timer
+        let timerTime = 25 * 60; // 25 minutes in seconds
+        let timerRunning = false;
+        let timerInterval;
+        let sessionCount = 0;
+
+        function updateTimerDisplay() {
+            let minutes = Math.floor(timerTime / 60);
+            let seconds = timerTime % 60;
+            document.getElementById('timer').innerHTML = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (!timerRunning) {
+                timerRunning = true;
+                timerInterval = setInterval(() => {
+                    if (timerTime > 0) {
+                        timerTime--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        timerRunning = false;
+                        sessionCount++;
+                        document.getElementById('session-counter').textContent = `Session: ${sessionCount}`;
+                        alert("⏰ Time's up! Take a 5-minute break. Yuki approves.");
+                        
+                        // Auto-start break timer
+                        setTimeout(() => {
+                            if (confirm("Break over. Start next study session?")) {
+                                timerTime = 25 * 60;
+                                updateTimerDisplay();
+                                startTimer();
+                            }
+                        }, 5000);
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            if (timerRunning) {
+                clearInterval(timerInterval);
+                timerRunning = false;
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            timerTime = 25 * 60;
+            updateTimerDisplay();
+        }
+
+        // Streak Counter
+        let streak = localStorage.getItem('styora-streak') || 0;
+        document.getElementById('streak-count').textContent = streak;
+
+        function addStreak() {
+            streak++;
+            localStorage.setItem('styora-streak', streak);
+            document.getElementById('streak-count').textContent = streak;
+            
+            // Yuki's reaction
+            const reactions = [
+                "Good. Continue.",
+                "Acceptable progress.",
+                "I'm... mildly impressed.",
+                "Don't stop now.",
+                "The streak grows. As expected."
+            ];
+            
+            addYukiMessage(reactions[Math.floor(Math.random() * reactions.length)]);
+        }
+
+        // Chat with Yuki
+        const yukiResponses = [
+            "Focus. The answer is in your materials.",
+            "Break it down into smaller parts. I'll wait.",
+            "Have you tried... actually studying?",
+            "Let me silver-glare at you until you figure it out.",
+            "My nine tails are twitching with impatience. Continue.",
+            "Even cute foxes know this one. Try again.",
+            "The solution is simple: Study. Now.",
+            "I could explain, but you learn better by struggling.",
+            "Check chapter 3. I know you haven't.",
+            "Your dedication is... almost adequate. Continue."
+        ];
+
+        const studyTips = [
+            "Use the Pomodoro method. 25 minutes, then break.",
+            "Teach the concept to someone else. Even if it's your plant.",
+            "Create flashcards. Physical ones. Yes, with paper.",
+            "Study right before sleep. Your brain consolidates then.",
+            "Find a study buddy. Preferably one less distracting than you.",
+            "Use active recall. Close the book and recite.",
+            "Space out your study sessions. Cramming is ineffective.",
+            "Connect new info to what you already know.",
+            "Explain it to Yuki. I'll pretend to listen.",
+            "Take notes by hand. Not typing. Your memory will thank me."
+        ];
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Add user message
+                const chatBox = document.getElementById('chat-box');
+                const userMsg = document.createElement('div');
+                userMsg.className = 'message message-user';
+                userMsg.innerHTML = `<strong>You:</strong> ${message}`;
+                chatBox.appendChild(userMsg);
+                
+                // Clear input
+                input.value = '';
+                
+                // Scroll to bottom
+                chatBox.scrollTop = chatBox.scrollHeight;
+                
+                // Yuki's response (after delay)
+                setTimeout(() => {
+                    let response;
+                    
+                    if (message.toLowerCase().includes('help') || message.toLowerCase().includes('tip')) {
+                        response = studyTips[Math.floor(Math.random() * studyTips.length)];
+                    } else if (message.toLowerCase().includes('hi') || message.toLowerCase().includes('hello')) {
+                        response = "Hello. Let's not waste time with greetings. Study.";
+                    } else if (message.toLowerCase().includes('cute')) {
+                        response = "I am not 'cute'. I am pedagogically effective. Now focus.";
+                    } else if (message.toLowerCase().includes('break') || message.toLowerCase().includes('tired')) {
+                        response = "Take a 5-minute break. Set a timer. I'm watching.";
+                    } else {
+                        response = yukiResponses[Math.floor(Math.random() * yukiResponses.length)];
+                    }
+                    
+                    addYukiMessage(response);
+                }, 1000);
+            }
+        }
+
+        function addYukiMessage(text) {
+            const chatBox = document.getElementById('chat-box');
+            const yukiMsg = document.createElement('div');
+            yukiMsg.className = 'message message-yuki';
+            yukiMsg.innerHTML = `<strong>Yuki:</strong> ${text}`;
+            chatBox.appendChild(yukiMsg);
+            
+            // Scroll to bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Waitlist Form
+        function joinWaitlist() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const study = document.getElementById('study-field').value;
+            
+            if (name && email && study !== 'Select your field') {
+                // Save locally (in real app, this goes to server)
+                const signups = JSON.parse(localStorage.getItem('styora-signups') || '[]');
+                signups.push({ name, email, study, date: new Date().toISOString() });
+                localStorage.setItem('styora-signups', JSON.stringify(signups));
+                
+                // Show success message
+                document.getElementById('waitlist-message').style.display = 'block';
+                
+                // Clear form
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('study-field').value = 'Select your field';
+                
+                // Yuki's comment
+                setTimeout(() => {
+                    addYukiMessage("Added to waitlist. While you wait, perhaps... study?");
+                }, 1500);
+                
+                // Log to console (you can check this!)
+                console.log('New waitlist signup:', { name, email, study });
+                console.log('Total signups:', signups.length);
+            } else {
+                alert("Please fill all fields correctly. Yuki is waiting.");
+            }
+        }
+
+        // Enter key for chat
+        document.getElementById('chat-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Initialize timer display
+        updateTimerDisplay();
+        
+        // Add a welcome message from Yuki
+        setTimeout(() => {
+            addYukiMessage("I see you've opened the study app. Good. Let's begin.");
+        }, 2000);
+    </script>
+</body>
+</html>
